@@ -17,8 +17,8 @@ const MainLayout = ({ children }) => {
                   <div
                         className={cn(
                               'transition-all duration-300',
-                              'ml-0 md:ml-0', // Base class for small screens
-                              isSidebarOpen ? 'md:ml-64' : 'md:ml-20'
+                              'ml-0', // Base class for small screens
+                              'md:ml-64' // Always 64 on large screens
                         )}
                   >
                         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
