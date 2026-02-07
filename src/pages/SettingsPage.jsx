@@ -7,34 +7,14 @@ import Button from '../components/ui/Button';
 const SettingsPage = () => {
       return (
             <div className="space-y-6">
-                  <div className="flex items-center justify-between">
+                  <div className="">
                         <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
-                        <Button className="flex items-center gap-2">
-                              <Save size={16} />
-                              Save Changes
-                        </Button>
+                        
                   </div>
 
                   <div className="grid gap-6 lg:grid-cols-3">
                         {/* Navigation / Categories */}
-                        <div className="space-y-2 lg:col-span-1">
-                              <Button variant="secondary" className="w-full justify-start gap-3 h-11">
-                                    <Globe size={18} />
-                                    General Settings
-                              </Button>
-                              <Button variant="ghost" className="w-full justify-start gap-3 h-11 text-gray-500">
-                                    <Video size={18} />
-                                    Video Processing
-                              </Button>
-                              <Button variant="ghost" className="w-full justify-start gap-3 h-11 text-gray-500">
-                                    <Shield size={18} />
-                                    Security & Privacy
-                              </Button>
-                              <Button variant="ghost" className="w-full justify-start gap-3 h-11 text-gray-500">
-                                    <Bell size={18} />
-                                    Notifications
-                              </Button>
-                        </div>
+                      
 
                         {/* Settings Form */}
                         <div className="lg:col-span-2 space-y-6">

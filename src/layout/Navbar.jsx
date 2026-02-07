@@ -1,8 +1,18 @@
+import React, { useState } from 'react';
 import { Bell, Search, User, Menu, X } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
       const location = useLocation();
+      const navigate = useNavigate();
+      const [searchQuery, setSearchQuery] = useState('');
+
+      const handleSearch = (e) => {
+            if (e.key === 'Enter' && searchQuery.trim()) {
+                  navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                  setSearchQuery('');
+            }
+      };
 
       // Convert path to title
       const getPageTitle = (path) => {
@@ -31,17 +41,26 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
                                           type="text"
                                           placeholder="Search..."
                                           className="h-9 w-64 rounded-lg border border-gray-200 bg-gray-50 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
+                                          onKeyDown={handleSearch}
                                     />
                               </div>
 
-                              <button className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-gray-100 hover:bg-gray-50">
+                              <button
+                                    onClick={() => navigate('/notifications')}
+                                    className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors"
+                              >
                                     <Bell size={18} className="text-gray-500" />
                                     <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500 border-2 border-white"></span>
                               </button>
 
                               <div className="h-8 w-px bg-gray-100 mx-2"></div>
 
-                              <div className="flex items-center gap-3">
+                              <div
+                                    className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+                                    onClick={() => navigate('/profile')}
+                              >
                                     <div className="text-right hidden sm:block">
                                           <p className="text-sm font-medium text-gray-900">Alex Johnson</p>
                                           <p className="text-xs text-gray-500">Admin</p>

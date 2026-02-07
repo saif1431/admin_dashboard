@@ -17,6 +17,8 @@ import Modal from '../components/ui/Modal';
 const PaymentsPage = () => {
       const [selectedPayment, setSelectedPayment] = useState(null);
       const [isModalOpen, setIsModalOpen] = useState(false);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [filterStatus, setFilterStatus] = useState('All');
 
       const getStatusVariant = (status) => {
             switch (status) {
@@ -32,31 +34,46 @@ const PaymentsPage = () => {
             setIsModalOpen(true);
       };
 
+      const filteredPayments = paymentsData.filter(payment => {
+            const matchesSearch = payment.email.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesFilter = filterStatus === 'All' || payment.status === filterStatus;
+            return matchesSearch && matchesFilter;
+      });
+
       return (
             <div className="space-y-6">
                   <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-900">Payments</h2>
-                        <Button variant="outline" size="sm" className="flex items-center gap-2">
+                        {/*  */}
+<Button variant="outline" size="sm" className="flex items-center gap-2">
                               <Download size={16} />
                               Download All
-                        </Button>
-                  </div>
+                        </Button>                  </div>
 
                   <Card>
                         <CardHeader className="flex flex-row items-center justify-between flex-wrap border-none gap-4">
                               <CardTitle>Transaction History</CardTitle>
-                              <div className="flex items-center gap-3">
+                              <div className="flex flex-wrap items-center gap-3">
                                     <div className="relative">
                                           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                                           <input
                                                 type="text"
                                                 placeholder="Search payments..."
                                                 className="h-9 w-64 rounded-lg border border-gray-200 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
                                           />
                                     </div>
-                                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 border border-gray-100">
-                                          <Filter size={18} />
-                                    </Button>
+                                    <select
+                                          className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                          value={filterStatus}
+                                          onChange={(e) => setFilterStatus(e.target.value)}
+                                    >
+                                          <option value="All">All Status</option>
+                                          <option value="Paid">Paid</option>
+                                          <option value="Pending">Pending</option>
+                                          <option value="Failed">Failed</option>
+                                    </select>
                               </div>
                         </CardHeader>
                         <CardContent className="p-0">
@@ -72,7 +89,7 @@ const PaymentsPage = () => {
                                           </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                          {paymentsData.map((payment) => (
+                                          {filteredPayments.map((payment) => (
                                                 <TableRow key={payment.id}>
                                                       <TableCell className="font-mono text-xs text-gray-500">
                                                             #TRX-{1000 + payment.id}
@@ -99,6 +116,13 @@ const PaymentsPage = () => {
                                                       </TableCell>
                                                 </TableRow>
                                           ))}
+                                          {filteredPayments.length === 0 && (
+                                                <TableRow>
+                                                      <TableCell colSpan={6} className="py-12 text-center text-gray-500">
+                                                            No payments found matching your search.
+                                                      </TableCell>
+                                                </TableRow>
+                                          )}
                                     </TableBody>
                               </Table>
                         </CardContent>

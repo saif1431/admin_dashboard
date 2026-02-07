@@ -9,7 +9,11 @@ import {
       LogOut,
       ChevronLeft,
       ChevronRight,
-      Zap
+      Zap,
+      History,
+      Bell,
+      User,
+      Search
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -18,8 +22,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             { title: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
             { title: 'Videos', icon: Video, path: '/videos' },
             { title: 'Users', icon: Users, path: '/users' },
-            // { title: 'Payments', icon: CreditCard, path: '/payments' },
-            // { title: 'Settings', icon: Settings, path: '/settings' },
+            { title: 'Payments', icon: CreditCard, path: '/payments' },
+            { title: 'Activity', icon: History, path: '/activity' },
+            { title: 'Notifications', icon: Bell, path: '/notifications' },
+            { title: 'Search', icon: Search, path: '/search' },
+            { title: 'Profile', icon: User, path: '/profile' },
+            { title: 'Settings', icon: Settings, path: '/settings' },
       ];
 
       const handleLinkClick = () => {

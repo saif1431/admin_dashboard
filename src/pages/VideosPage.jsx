@@ -21,6 +21,9 @@ const VideosPage = () => {
       const [videoToDelete, setVideoToDelete] = useState(null);
       const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+      const [searchQuery, setSearchQuery] = useState('');
+      const [filterStatus, setFilterStatus] = useState('All');
+
       const getStatusVariant = (status) => {
             switch (status) {
                   case 'Completed': return 'success';
@@ -48,19 +51,31 @@ const VideosPage = () => {
             }
       };
 
+      const filteredVideos = videos.filter(video => {
+            const matchesSearch = video.name.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesFilter = filterStatus === 'All' || video.status === filterStatus;
+            return matchesSearch && matchesFilter;
+      });
+
       return (
             <div className="space-y-6">
                   <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-900">Videos</h2>
                         <div className="flex items-center gap-3">
-                              <Button variant="outline" size="sm" className="flex items-center gap-3 hover:bg-gray-50">
-                                    <Filter size={16} />
-                                    Filter
-                              </Button>
-                              <Button size="sm" className="flex items-center gap-3 shadow-sm">
+                              <select
+                                    className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                    value={filterStatus}
+                                    onChange={(e) => setFilterStatus(e.target.value)}
+                              >
+                                    <option value="All">All Status</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Processing">Processing</option>
+                                    <option value="Failed">Failed</option>
+                              </select>
+                              {/* <Button size="sm" className="flex items-center gap-3 shadow-sm">
                                     <Play size={16} fill="currentColor" />
                                     New Video
-                              </Button>
+                              </Button> */}
                         </div>
                   </div>
 
@@ -73,6 +88,8 @@ const VideosPage = () => {
                                           type="text"
                                           placeholder="Search videos..."
                                           className="h-9 w-64 rounded-lg border border-gray-200 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
                                     />
                               </div>
                         </CardHeader>
@@ -88,7 +105,7 @@ const VideosPage = () => {
                                           </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                          {videos.map((video) => (
+                                          {filteredVideos.map((video) => (
                                                 <TableRow key={video.id}>
                                                       <TableCell>
                                                             <div className="flex items-center gap-3">
@@ -144,7 +161,7 @@ const VideosPage = () => {
                                                       </TableCell>
                                                 </TableRow>
                                           ))}
-                                          {videos.length === 0 && (
+                                          {filteredVideos.length === 0 && (
                                                 <TableRow>
                                                       <TableCell colSpan={5} className="py-12 text-center text-gray-500">
                                                             No videos found. Create a new one to get started.

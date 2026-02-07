@@ -15,6 +15,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 
 const UsersPage = () => {
       const [users, setUsers] = useState(usersData);
+      const [searchQuery, setSearchQuery] = useState('');
+      const [filterStatus, setFilterStatus] = useState('All');
 
       const handleToggleStatus = (userId) => {
             setUsers(users.map(user => {
@@ -28,15 +30,32 @@ const UsersPage = () => {
             }));
       };
 
+      const filteredUsers = users.filter(user => {
+            const matchesSearch = user.email.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesFilter = filterStatus === 'All' || user.status === filterStatus;
+            return matchesSearch && matchesFilter;
+      });
+
       return (
             <div className="space-y-6">
                   <div className="flex items-center justify-between">
                         <h2 className="text-2xl font-bold text-gray-900">Users</h2>
-                        <Button size="sm">Add User</Button>
+                        <div className="flex items-center gap-3">
+                              <select
+                                    className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                    value={filterStatus}
+                                    onChange={(e) => setFilterStatus(e.target.value)}
+                              >
+                                    <option value="All">All Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Blocked">Blocked</option>
+                              </select>
+                              {/* <Button size="sm">Add User</Button> */}
+                        </div>
                   </div>
 
                   <Card>
-                        <CardHeader className="flex flex-row items-center justify-between flex-wrap border-none">
+                        <CardHeader className="flex flex-row items-center justify-between flex-wrap border-none gap-4">
                               <CardTitle>User Directory</CardTitle>
                               <div className="relative">
                                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -44,6 +63,8 @@ const UsersPage = () => {
                                           type="text"
                                           placeholder="Search users..."
                                           className="h-9 w-64 rounded-lg border border-gray-200 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
                                     />
                               </div>
                         </CardHeader>
@@ -59,7 +80,7 @@ const UsersPage = () => {
                                           </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                          {users.map((user) => (
+                                          {filteredUsers.map((user) => (
                                                 <TableRow key={user.id}>
                                                       <TableCell>
                                                             <div className="flex items-center gap-3">
@@ -106,6 +127,13 @@ const UsersPage = () => {
                                                       </TableCell>
                                                 </TableRow>
                                           ))}
+                                          {filteredUsers.length === 0 && (
+                                                <TableRow>
+                                                      <TableCell colSpan={5} className="py-12 text-center text-gray-500">
+                                                            No users found matching your search.
+                                                      </TableCell>
+                                                </TableRow>
+                                          )}
                                     </TableBody>
                               </Table>
                         </CardContent>

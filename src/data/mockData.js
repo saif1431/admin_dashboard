@@ -38,3 +38,17 @@ export const paymentsData = [
       { id: 4, email: 'david@studio.com', amount: '$49.00', date: '2024-02-02', status: 'Failed' },
       { id: 5, email: 'mike@tech.io', amount: '$149.00', date: '2024-02-01', status: 'Paid' },
 ];
+
+export const activityData = [
+      { id: 1, user: 'john@example.com', action: 'User Login', date: '2024-02-06', time: '10:30 AM', status: 'Success' },
+      { id: 2, user: 'admin@nexus.com', action: 'Video Created', date: '2024-02-06', time: '11:15 AM', status: 'Success' },
+      { id: 3, user: 'sarah@design.co', action: 'Video Deleted', date: '2024-02-06', time: '01:45 PM', status: 'Success' },
+      { id: 4, user: 'mike@tech.io', action: 'Payment Made', date: '2024-02-05', time: '09:00 AM', status: 'Success' },
+      { id: 5, user: 'system', action: 'Error Happened', date: '2024-02-05', time: '04:20 PM', status: 'Error' },
+];
+
+export const notificationsData = [
+      { id: 1, title: 'New User Registered', message: 'A new user emma@creative.net has signed up.', type: 'info', time: '2 hours ago' },
+      { id: 2, title: 'Video Generation Failed', message: 'Video #TRX-1004 generation failed due to timeout.', type: 'error', time: '5 hours ago' },
+      { id: 3, title: 'Payment Issue', message: 'User david@studio.com payment was declined.', type: 'warning', time: '1 day ago' },
+];
