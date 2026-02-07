@@ -176,7 +176,7 @@ const PaymentsPage = () => {
                                           <div>
                                                 <p className="text-xs font-semibold text-gray-500 uppercase">Billing Info</p>
                                                 <p className="text-sm text-gray-600 mt-1">
-                                                      Nexus Pro Monthly Plan <br />
+                                                      {/* Nexus Pro Monthly Plan <br /> */}
                                                       Feb 1 - Feb 28, 2026
                                                 </p>
                                           </div>

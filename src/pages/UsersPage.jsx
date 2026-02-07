@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserMinus, UserCheck, MoreHorizontal, Search } from 'lucide-react';
+import { UserMinus, UserCheck, MoreHorizontal, Search, Calendar, Mail, Shield, User as UserIcon, Video, Check } from 'lucide-react';
 import { usersData } from '../data/mockData';
 import {
       Table,
@@ -12,11 +12,20 @@ import {
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
+import Modal from '../components/ui/Modal';
+import { cn } from '../lib/utils';
 
 const UsersPage = () => {
       const [users, setUsers] = useState(usersData);
       const [searchQuery, setSearchQuery] = useState('');
       const [filterStatus, setFilterStatus] = useState('All');
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [selectedUser, setSelectedUser] = useState(null);
+
+      const handleOpenModal = (user) => {
+            setSelectedUser(user);
+            setIsModalOpen(true);
+      };
 
       const handleToggleStatus = (userId) => {
             setUsers(users.map(user => {
@@ -120,7 +129,12 @@ const UsersPage = () => {
                                                                               </>
                                                                         )}
                                                                   </Button>
-                                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                                                  <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        className="h-8 w-8 p-0"
+                                                                        onClick={() => handleOpenModal(user)}
+                                                                  >
                                                                         <MoreHorizontal size={16} />
                                                                   </Button>
                                                             </div>
@@ -138,13 +152,122 @@ const UsersPage = () => {
                               </Table>
                         </CardContent>
                   </Card>
+
+                  <Modal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        title="User Details"
+                  >
+                        {selectedUser && (
+                              <div className="space-y-8">
+                                    {/* Header Section */}
+                                    <div className="flex items-center gap-6">
+                                          <div className="h-20 w-20 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-bold uppercase ring-4 ring-blue-50/50">
+                                                {selectedUser.email.substring(0, 2)}
+                                          </div>
+                                          <div className="flex-1">
+                                                <h4 className="text-xl font-bold text-gray-900">{selectedUser.email.split('@')[0]}</h4>
+                                                <p className="text-sm text-gray-500 mt-0.5">{selectedUser.email}</p>
+                                                <div className="flex items-center gap-2 mt-3">
+                                                      <Badge variant={selectedUser.status === 'Active' ? 'success' : 'danger'}>
+                                                            {selectedUser.status}
+                                                      </Badge>
+                                                      {/* <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Premium Member</span> */}
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    {/* Stats Grid */}
+                                    <div className="grid grid-cols-3 gap-4">
+                                          <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                                                <div className="flex items-center gap-2 text-gray-500 mb-1">
+                                                      <Video size={14} />
+                                                      <span className="text-xs font-medium">Total Videos</span>
+                                                </div>
+                                                <p className="text-lg font-bold text-gray-900">{selectedUser.totalVideos}</p>
+                                          </div>
+                                          <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                                                <div className="flex items-center gap-2 text-gray-500 mb-1">
+                                                      <Calendar size={14} />
+                                                      <span className="text-xs font-medium">Joined</span>
+                                                </div>
+                                                <p className="text-lg font-bold text-gray-900">{selectedUser.joined}</p>
+                                          </div>
+                                          <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+                                                <div className="flex items-center gap-2 text-gray-500 mb-1">
+                                                      <Shield size={14} />
+                                                      <span className="text-xs font-medium">Trust Score</span>
+                                                </div>
+                                                <p className="text-lg font-bold text-gray-900">98/100</p>
+                                          </div>
+                                    </div>
+
+                                    {/* Info List */}
+                                    <div className="grid grid-cols-2 gap-x-12 gap-y-6 pt-2">
+                                          <div className="space-y-1">
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                      <Mail size={14} />
+                                                      <span className="text-[10px] font-bold uppercase tracking-wider">Email Address</span>
+                                                </div>
+                                                <p className="text-sm font-medium text-gray-900">{selectedUser.email}</p>
+                                          </div>
+                                          <div className="space-y-1">
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                      <UserIcon size={14} />
+                                                      <span className="text-[10px] font-bold uppercase tracking-wider">Account Tier</span>
+                                                </div>
+                                                <p className="text-sm font-medium text-gray-900">Enterprise Pro</p>
+                                          </div>
+                                          <div className="space-y-1">
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                      <Shield size={14} />
+                                                      <span className="text-[10px] font-bold uppercase tracking-wider">Verification Status</span>
+                                                </div>
+                                                <p className="text-sm font-medium text-green-600 flex items-center gap-1.5">
+                                                      <Check size={14} />
+                                                      Verified Account
+                                                </p>
+                                          </div>
+                                          <div className="space-y-1">
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                      <Calendar size={14} />
+                                                      <span className="text-[10px] font-bold uppercase tracking-wider">Last Activity</span>
+                                                </div>
+                                                <p className="text-sm font-medium text-gray-900">Today, 2:45 PM</p>
+                                          </div>
+                                    </div>
+
+                                    {/* Footer Actions */}
+                                    <div className="flex items-center gap-3 pt-6 border-t border-gray-100">
+                                          <Button
+                                                className="flex-1 gap-2"
+                                                variant={selectedUser.status === 'Active' ? 'outline' : 'default'}
+                                                onClick={() => {
+                                                      handleToggleStatus(selectedUser.id);
+                                                      setIsModalOpen(false);
+                                                }}
+                                          >
+                                                {selectedUser.status === 'Active' ? (
+                                                      <>
+                                                            <UserMinus size={16} />
+                                                            Block User
+                                                      </>
+                                                ) : (
+                                                      <>
+                                                            <UserCheck size={16} />
+                                                            Unblock User
+                                                      </>
+                                                )}
+                                          </Button>
+                                          <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
+                                                Close
+                                          </Button>
+                                    </div>
+                              </div>
+                        )}
+                  </Modal>
             </div>
       );
 };
 
 export default UsersPage;
-
-// Internal utility
-function cn(...inputs) {
-      return inputs.filter(Boolean).join(' ');
-}

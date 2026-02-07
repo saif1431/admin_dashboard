@@ -3,7 +3,7 @@ import {
       Users,
       Video,
       Zap,
-      DollarSign,
+      Euro,
       ArrowUpRight,
       ArrowDownRight,
       MoreVertical,
@@ -28,7 +28,7 @@ const iconMap = {
       users: Users,
       video: Video,
       zap: Zap,
-      'dollar-sign': DollarSign,
+      'dollar-sign': Euro,
 };
 
 const DashboardPage = () => {

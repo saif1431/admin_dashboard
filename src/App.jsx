@@ -8,9 +8,7 @@ import UsersPage from './pages/UsersPage';
 import PaymentsPage from './pages/PaymentsPage';
 import SettingsPage from './pages/SettingsPage';
 import ActivityPage from './pages/ActivityPage';
-import NotificationsPage from './pages/NotificationsPage';
 import ProfilePage from './pages/ProfilePage';
-import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -69,26 +67,10 @@ function App() {
           }
         />
         <Route
-          path="/notifications"
-          element={
-            <MainLayout>
-              <NotificationsPage />
-            </MainLayout>
-          }
-        />
-        <Route
           path="/profile"
           element={
             <MainLayout>
               <ProfilePage />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <MainLayout>
-              <SearchPage />
             </MainLayout>
           }
         />

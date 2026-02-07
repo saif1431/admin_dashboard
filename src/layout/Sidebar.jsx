@@ -24,8 +24,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             { title: 'Users', icon: Users, path: '/users' },
             { title: 'Payments', icon: CreditCard, path: '/payments' },
             { title: 'Activity', icon: History, path: '/activity' },
-            { title: 'Notifications', icon: Bell, path: '/notifications' },
-            { title: 'Search', icon: Search, path: '/search' },
             { title: 'Profile', icon: User, path: '/profile' },
             { title: 'Settings', icon: Settings, path: '/settings' },
       ];

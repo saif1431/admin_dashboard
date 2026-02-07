@@ -2,7 +2,7 @@ export const statsData = [
       { title: 'Total Users', value: '12,543', change: '+12.5%', icon: 'users' },
       { title: 'Total Videos', value: '45,210', change: '+8.2%', icon: 'video' },
       { title: 'Total Generations', value: '89,432', change: '+23.1%', icon: 'zap' },
-      { title: 'Total Revenue', value: '$128,430', change: '+15.4%', icon: 'dollar-sign' },
+      { title: 'Total Revenue', value: '€128,430', change: '+15.4%', icon: 'dollar-sign' },
 ];
 
 export const chartData = [
@@ -32,11 +32,11 @@ export const usersData = [
 ];
 
 export const paymentsData = [
-      { id: 1, email: 'john@example.com', amount: '$49.00', date: '2024-02-05', status: 'Paid' },
-      { id: 2, email: 'sarah@design.co', amount: '$29.00', date: '2024-02-04', status: 'Pending' },
-      { id: 3, email: 'emma@creative.net', amount: '$99.00', date: '2024-02-03', status: 'Paid' },
-      { id: 4, email: 'david@studio.com', amount: '$49.00', date: '2024-02-02', status: 'Failed' },
-      { id: 5, email: 'mike@tech.io', amount: '$149.00', date: '2024-02-01', status: 'Paid' },
+      { id: 1, email: 'john@example.com', amount: '€49.00', date: '2024-02-05', status: 'Paid' },
+      { id: 2, email: 'sarah@design.co', amount: '€29.00', date: '2024-02-04', status: 'Pending' },
+      { id: 3, email: 'emma@creative.net', amount: '€99.00', date: '2024-02-03', status: 'Paid' },
+      { id: 4, email: 'david@studio.com', amount: '€49.00', date: '2024-02-02', status: 'Failed' },
+      { id: 5, email: 'mike@tech.io', amount: '€149.00', date: '2024-02-01', status: 'Paid' },
 ];
 
 export const activityData = [
